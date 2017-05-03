@@ -2,6 +2,8 @@ ENV['RACK_ENV'] ||= 'development'
 
 require 'sinatra/base'
 require_relative './model/link'
+require_relative './model/tag'
+require_relative './data_mapper_setup'
 
 class App < Sinatra::Base
 
@@ -19,7 +21,10 @@ class App < Sinatra::Base
   end
 
   post '/links' do
-    Link.create(name: params[:name], url: params[:url])
+    link = Link.create(name: params[:name], url: params[:url])
+    tag_new = Tag.create(tag: params[:tag])
+    link.tags << tag_new
+    link.save
     redirect('/links')
   end
 

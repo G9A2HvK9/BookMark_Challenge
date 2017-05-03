@@ -13,6 +13,7 @@ describe Link do
         expect(page).to have_content('Viewing Links Test')
       end
     end
+  end
 
     feature 'adding links' do
       scenario 'when I add a link on /links/new it will show up in my book marks' do
@@ -26,6 +27,21 @@ describe Link do
           expect(page).to have_content('https://www.addinglinks.com')
 
         end
+      end
+    end
+
+    feature 'adding tags to links' do
+      scenario 'when I add a tag to a new link, it gets added to the database with tag' do
+
+        visit '/links/new'
+        fill_in("name", :with => "Adding Tag Test")
+        fill_in("tag", :with => 'TestTag')
+        fill_in("url", :with => 'https://www.adding_tags.com')
+        click_button('Add Bookmark')
+
+        within 'ul#links' do
+          expect(page).to have_content('https://www.adding_tags.com')
+          expect(page).to have_content('TestTag')
       end
     end
   end
