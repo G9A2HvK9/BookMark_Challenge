@@ -1,3 +1,1 @@
-# <process type>: <command>
-
-<[web][worker][urgentworker][clock]>: <[rake jobs:work]>
+web: bundle exec ruby app.rb -p $PORT
