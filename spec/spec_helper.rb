@@ -1,3 +1,5 @@
+ENV['RACK_ENV'] = 'test'
+
 require "rspec"
 require "web_helpers"
 require "capybara"
