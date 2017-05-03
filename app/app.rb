@@ -1,7 +1,7 @@
 ENV['RACK_ENV'] ||= 'development'
 
 require 'sinatra/base'
-require './model/link'
+require_relative './model/link'
 
 class App < Sinatra::Base
 

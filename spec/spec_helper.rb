@@ -4,8 +4,8 @@ require "rspec"
 require "web_helpers"
 require "capybara"
 require "capybara/rspec"
-require "./model/link"
-require "./app.rb"
+require "./app/model/link"
+require "./app/app.rb"
 require 'database_cleaner'
 
 Capybara.app = App
