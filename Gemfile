@@ -13,5 +13,6 @@ source "https://www.rubygems.org" do
   gem "capybara"
   gem "sinatra"
   gem "rack"
+  gem "rake"
 
 end

@@ -35,16 +35,14 @@ describe Link do
 
         visit '/links/new'
         fill_in("name", :with => "Adding Tag Test")
-        fill_in("tag", :with => 'TestTag')
+        fill_in("tags", :with => 'TestTag')
         fill_in("url", :with => 'https://www.adding_tags.com')
         click_button('Add Bookmark')
 
-        within 'ul#links' do
+        visit '/tags/TestTag'
           expect(page).to have_content('https://www.adding_tags.com')
-          expect(page).to have_content('TestTag')
       end
     end
-  end
 
   feature 'filtering by tags' do
     scenario 'when I filter by tags, only links with a specific tag show up' do
@@ -53,16 +51,33 @@ describe Link do
 
       visit '/links/new'
       fill_in("name", :with => "Adding Tag Test")
-      fill_in("tag", :with => "bubbles")
+      fill_in("tags", :with => 'TestTag')
+      fill_in("url", :with => 'https://www.adding_tags.com')
+      click_button('Add Bookmark')
+
+      visit '/tags/TestTag'
+
+      expect(page).to_not have_content('bubbles')
+      expect(page).to have_content('https://www.adding_tags.com')
+    end
+  end
+
+  feature 'adding multiple tags to a link' do
+    scenario 'when I add more than one tag to a link, I want to be able to find that link under all those tags' do
+
+      visit 'links/new'
+
+      visit '/links/new'
+      fill_in("name", :with => "Adding Tag Test")
+      fill_in("tags", :with => "bubbles, balloons")
       fill_in("url", :with => 'https://www.adding_tags.com')
       click_button('Add Bookmark')
 
       visit '/tags/bubbles'
+      expect(page).to have_content('https://www.adding_tags.com')
 
-      save_and_open_page
-
-      expect(page).to_not have_content('TestTag')
-      expect(page).to have_content('bubbles')
+      visit '/tags/balloons'
+      expect(page).to have_content('https://www.adding_tags.com')
     end
   end
 end

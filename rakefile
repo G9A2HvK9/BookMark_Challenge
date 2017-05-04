@@ -1,0 +1,21 @@
+require "data_mapper"
+require "./app/app.rb"
+
+task :default do
+  puts "This is the deault task for BookMarkManager. Rake is working."
+end
+
+desc "handles all rake tasks regarding datamapper"
+namespace :db do
+
+desc "performs destructive database migration"
+  task :auto_migrate do
+    DataMapper.auto_migrate!
+  end
+
+desc "performs non-destructive database upgrade"
+  task :auto_upgrade do
+    DataMapper.auto_upgrade!
+  end
+
+end
