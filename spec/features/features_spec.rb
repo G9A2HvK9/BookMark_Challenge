@@ -45,4 +45,24 @@ describe Link do
       end
     end
   end
+
+  feature 'filtering by tags' do
+    scenario 'when I filter by tags, only links with a specific tag show up' do
+      # make_bubble_links
+      # make_test_links
+
+      visit '/links/new'
+      fill_in("name", :with => "Adding Tag Test")
+      fill_in("tag", :with => "bubbles")
+      fill_in("url", :with => 'https://www.adding_tags.com')
+      click_button('Add Bookmark')
+
+      visit '/tags/bubbles'
+
+      save_and_open_page
+
+      expect(page).to_not have_content('TestTag')
+      expect(page).to have_content('bubbles')
+    end
+  end
 end

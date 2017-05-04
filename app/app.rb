@@ -22,10 +22,16 @@ class App < Sinatra::Base
 
   post '/links' do
     link = Link.create(name: params[:name], url: params[:url])
-    tag_new = Tag.create(tag: params[:tag])
+    tag_new = Tag.first_or_create(tag: params[:tag])
     link.tags << tag_new
     link.save
     redirect('/links')
+  end
+
+  get '/tags/:tag' do
+    tag = Tag.first(tag: params[:tag])
+    @links = tag ? tag.links : []
+    erb(:links)
   end
 
 
